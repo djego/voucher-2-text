@@ -3,7 +3,7 @@ import os
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-import json
+
 
 def write_to_excel(data):
     SCOPES = ['https://www.googleapis.com/auth/drive.file']
@@ -24,8 +24,8 @@ def write_to_excel(data):
 
     try:
         sh = gc.open('transfer_bank')
-    except:
-        sh = gc.create('transfer_bank')    
+    except gspread.SpreadsheetNotFound:
+        sh = gc.create('transfer_bank')
     worksheet = sh.get_worksheet(0)
     if len(worksheet.findall('bank')) == 0:
         worksheet.append_row(list(data[0].keys()))
